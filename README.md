@@ -18,5 +18,4 @@ A program that "deals" (prints out) 5 cards using the Deck of Cards API (https:/
 A program that retrieves the exchequer account (historical series) datset FIQ02 from data.cso.ie
 
 ### assignment 04-github.ipynb
-
 A program in python that will read a file from a repository, replacing all the instances of the text "Andrew" with my name "Faolán". 
