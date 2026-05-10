@@ -1,0 +1,92 @@
+<?xml version="1.0" ?><ArrayOfObjTrainPositions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objTrainPositions>
+    <TrainStatus>N</TrainStatus>
+    <TrainLatitude>51.8491</TrainLatitude>
+    <TrainLongitude>-8.29956</TrainLongitude>
+    <TrainCode>P517</TrainCode>
+    <TrainDate>10 May 2026</TrainDate>
+    <PublicMessage>P517\nCobh to Cork\nExpected Departure 17:30</PublicMessage>
+    <Direction>To Cork</Direction>
+  </objTrainPositions>
+  <objTrainPositions>
+    <TrainStatus>N</TrainStatus>
+    <TrainLatitude>51.9018</TrainLatitude>
+    <TrainLongitude>-8.4582</TrainLongitude>
+    <TrainCode>A225</TrainCode>
+    <TrainDate>10 May 2026</TrainDate>
+    <PublicMessage>A225\nCork to Dublin Heuston\nExpected Departure 17:25</PublicMessage>
+    <Direction>To Dublin Heuston</Direction>
+  </objTrainPositions>
+  <objTrainPositions>
+    <TrainStatus>N</TrainStatus>
+    <TrainLatitude>51.9018</TrainLatitude>
+    <TrainLongitude>-8.4582</TrainLongitude>
+    <TrainCode>D567</TrainCode>
+    <TrainDate>10 May 2026</TrainDate>
+    <PublicMessage>D567\nCork to Midleton\nExpected Departure 17:15</PublicMessage>
+    <Direction>To Midleton</Direction>
+  </objTrainPositions>
+  <objTrainPositions>
+    <TrainStatus>N</TrainStatus>
+    <TrainLatitude>52.1396</TrainLatitude>
+    <TrainLongitude>-8.65521</TrainLongitude>
+    <TrainCode>A308</TrainCode>
+    <TrainDate>10 May 2026</TrainDate>
+    <PublicMessage>A308\nMallow to Tralee\nExpected Departure 17:25</PublicMessage>
+    <Direction>To Tralee</Direction>
+  </objTrainPositions>
+  <objTrainPositions>
+    <TrainStatus>N</TrainStatus>
+    <TrainLatitude>53.1442</TrainLatitude>
+    <TrainLongitude>-6.06085</TrainLongitude>
+    <TrainCode>E815</TrainCode>
+    <TrainDate>10 May 2026</TrainDate>
+    <PublicMessage>E815\nGreystones to Malahide\nExpected Departure 17:20</PublicMessage>
+    <Direction>Northbound</Direction>
+  </objTrainPositions>
+  <objTrainPositions>
+    <TrainStatus>N</TrainStatus>
+    <TrainLatitude>53.3531</TrainLatitude>
+    <TrainLongitude>-6.24591</TrainLongitude>
+    <TrainCode>D917</TrainCode>
+    <TrainDate>10 May 2026</TrainDate>
+    <PublicMessage>D917\nDublin Connolly to Maynooth\nExpected Departure 17:17</PublicMessage>
+    <Direction>Northbound</Direction>
+  </objTrainPositions>
+  <objTrainPositions>
+    <TrainStatus>N</TrainStatus>
+    <TrainLatitude>53.3831</TrainLatitude>
+    <TrainLongitude>-6.4242</TrainLongitude>
+    <TrainCode>D378</TrainCode>
+    <TrainDate>10 May 2026</TrainDate>
+    <PublicMessage>D378\nClonsilla to M3 Parkway\nExpected Departure 17:18</PublicMessage>
+    <Direction>Northbound</Direction>
+  </objTrainPositions>
+  <objTrainPositions>
+    <TrainStatus>N</TrainStatus>
+    <TrainLatitude>53.3891</TrainLatitude>
+    <TrainLongitude>-6.07401</TrainLongitude>
+    <TrainCode>E225</TrainCode>
+    <TrainDate>10 May 2026</TrainDate>
+    <PublicMessage>E225\nHowth to Bray\nExpected Departure 17:27</PublicMessage>
+    <Direction>Southbound</Direction>
+  </objTrainPositions>
+  <objTrainPositions>
+    <TrainStatus>R</TrainStatus>
+    <TrainLatitude>0</TrainLatitude>
+    <TrainLongitude>0</TrainLongitude>
+    <TrainCode>A802</TrainCode>
+    <TrainDate>10 May 2026</TrainDate>
+    <PublicMessage>A802\n13:40 - Dublin Heuston to Westport (13 mins late)\nArrived Inchicore Advance Starter next stop Newbridge</PublicMessage>
+    <Direction>To Westport</Direction>
+  </objTrainPositions>
+  <objTrainPositions>
+    <TrainStatus>R</TrainStatus>
+    <TrainLatitude>53.2043</TrainLatitude>
+    <TrainLongitude>-6.10046</TrainLongitude>
+    <TrainCode>E117</TrainCode>
+    <TrainDate>09 May 2026</TrainDate>
+    <PublicMessage>E117\n22:33 - Malahide to Greystones (1442 mins late)\nDeparted Bray next stop Greystones</PublicMessage>
+    <Direction>Southbound</Direction>
+  </objTrainPositions>
+</ArrayOfObjTrainPositions>
