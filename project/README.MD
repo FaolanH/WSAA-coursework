@@ -8,3 +8,7 @@ Steps for running the venv:
  - navigate to the folder the repository is saved in 
  - to run the virtual environment on Windows machines, navigate into venv\script and then type 'activate.bat'
  - the virtual environment should now be running, to exit this please type 'deactivate' 
+
+ Here is a link to the web app: https://faolanh.pythonanywhere.com/
+
+ 
