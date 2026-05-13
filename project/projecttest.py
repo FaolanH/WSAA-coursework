@@ -16,10 +16,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/')
-def index():
-    return "Welcome to the PxStat Updates API!"
-
 @app.route('/updated_tables')
 def updates_tables ():
     return "Here are the tables that have been updated:"
