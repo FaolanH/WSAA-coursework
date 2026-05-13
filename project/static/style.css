@@ -1,0 +1,87 @@
+// Visualization Script
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+// Visualization Script
+
+const template = `
+<style>
+  body { font-family: Arial, sans-serif; padding: 16px; background: #f9f9f9; }
+  h2 { color: #333; margin-bottom: 12px; }
+  table { border-collapse: collapse; width: 100%; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+  th { background: #4a90d9; color: #fff; padding: 10px 14px; text-align: left; font-size: 14px; }
+  td { padding: 9px 14px; font-size: 13px; color: #444; border-bottom: 1px solid #eee; }
+  tr:last-child td { border-bottom: none; }
+  tr.even td { background: #f2f7fd; }
+  tr.odd td { background: #ffffff; }
+  .no-data { color: #888; font-style: italic; padding: 16px; }
+</style>
+<h2>CSO Dataset Overview</h2>
+{{#if items.length}}
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Dataset Label</th>
+      <th>Years Available</th>
+      <th>Number of Data Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each items}}
+    <tr class="{{rowClass}}">
+      <td>{{index}}</td>
+      <td>{{label}}</td>
+      <td>{{years}}</td>
+      <td>{{dataPoints}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{else}}
+<p class="no-data">No data available.</p>
+{{/if}}
+`;
+
+function createPayload() {
+  try {
+    const json = pm.response.json();
+    const rawItems = (json && json.link && Array.isArray(json.link.item)) ? json.link.item : [];
+
+    if (rawItems.length === 0) {
+      return { items: [] };
+    }
+
+    const items = rawItems.map(function(item, i) {
+      const label = item.label || '(no label)';
+
+      // Extract years from TLIST(A1) category index
+      let years = 'N/A';
+      try {
+        const tlist = item.dimension && item.dimension['TLIST(A1)'];
+        const idx = tlist && tlist.category && tlist.category.index;
+        if (Array.isArray(idx) && idx.length > 0) {
+          const sorted = idx.slice().sort();
+          years = sorted[0] + ' – ' + sorted[sorted.length - 1] + ' (' + sorted.length + ' yrs)';
+        }
+      } catch (e) {}
+
+      const dataPoints = Array.isArray(item.value) ? item.value.length : 0;
+
+      return {
+        index: i + 1,
+        label: label,
+        years: years,
+        dataPoints: dataPoints,
+        rowClass: i % 2 === 0 ? 'even' : 'odd'
+      };
+    });
+
+    return { items: items };
+  } catch (e) {
+    return { items: [] };
+  }
+}
+
+pm.visualizer.set(template, createPayload());
