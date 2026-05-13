@@ -3,14 +3,18 @@
 # I have decided to make my project relevant to my work - this means looking at the api last updated tables on PxStat for CSO data. 
 
 #!flask/bin/python
+from flask import Flask, jsonify, render_template
 
-from flask import Flask
 import requests
 
 # API for last updated tables pxstat
 url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadCollection/2026-05-07/en"
 
 app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/')
 def index():
