@@ -5,7 +5,8 @@
 from flask import Flask, jsonify, render_template
 import requests
 import os
-import datetime from datetime
+from datetime import datetime
+
 
 app = Flask(__name__)
 
@@ -28,6 +29,10 @@ def index():
     except Exception as e:
         return f"CSO API returned invalid JSON. Error: {e}"
 
+    items = data.get("link", {}).get("item", [])
+
+datasets = []
+for item in items:
     raw_date = item.get("updated")
 
     try:
@@ -36,16 +41,12 @@ def index():
     except:
         formatted_date = raw_date
 
+    datasets.append({
+        "label": item.get("label"),
+        "updated": formatted_date,
+        "dimension": item.get("dimension")
+    })
 
-    items = data.get("link", {}).get("item", [])
-   
-    datasets = []
-    for item in items:
-        datasets.append({
-            "label": item.get("label"),
-            "updated": formatted_date,
-            "dimension": item.get("dimension")
-        })
 
     datasets.sort(key=lambda x: x["updated"], reverse=True)
 
