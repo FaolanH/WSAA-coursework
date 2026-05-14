@@ -83,6 +83,32 @@ def index():
         datasets=datasets
     )
 
+@app.route('/dataset/<dataset_id>')
+def dataset_detail(dataset_id):
+
+    # Get categories (cached)
+    categories = get_categories(dataset_id)
+
+    # Fetch full dataset metadata
+    url = f"https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{dataset_id}/JSON-stat/2.0/en"
+    headers = {"User-Agent": "Mozilla/5.0"}
+    r = requests.get(url, headers=headers, timeout=10)
+
+    try:
+        meta = r.json()
+    except:
+        meta = {}
+
+    # Extract dataset label
+    label = meta.get("label", dataset_id)
+
+    return render_template(
+        'dataset_detail.html',
+        dataset_id=dataset_id,
+        label=label,
+        categories=categories,
+        metadata=meta
+    )
 
 @app.route('/updated_tables')
 def updated_tables():
