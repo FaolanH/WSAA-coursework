@@ -10,6 +10,34 @@ from datetime import datetime
 app = Flask(__name__)
 
 
+# ---------------------------------------------------------
+# NEW FUNCTION: Extract clean readable categories
+# ---------------------------------------------------------
+def extract_readable_categories(meta):
+    """
+    Takes the full dataset metadata and extracts readable
+    category names (e.g., 'Month', 'County', 'Statistic'),
+    while skipping internal PXStat keys like TLIST(M1).
+    """
+    dims = meta.get("dimension", {})
+    clean = {}
+
+    for key, dim in dims.items():
+        label = dim.get("label", key)
+
+        # Skip internal PXStat keys like TLIST(M1)
+        if label.lower().startswith("tlist"):
+            continue
+
+        categories = list(dim.get("category", {}).get("label", {}).values())
+        clean[label] = categories
+
+    return clean
+
+
+# ---------------------------------------------------------
+# HOMEPAGE
+# ---------------------------------------------------------
 @app.route('/')
 def index():
     """
@@ -62,12 +90,16 @@ def index():
     )
 
 
+# ---------------------------------------------------------
+# DETAILS PAGE
+# ---------------------------------------------------------
 @app.route('/dataset/<dataset_id>')
 def dataset_detail(dataset_id):
     """
     Detail page for a single dataset:
     - Calls the CSO 'ReadDataset' endpoint
-    - Shows raw metadata and basic info
+    - Extracts readable categories
+    - Shows dataset name and updated date
     """
 
     url = f"https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{dataset_id}/JSON-stat/2.0/en"
@@ -80,12 +112,17 @@ def dataset_detail(dataset_id):
         meta = {}
 
     label = meta.get("label", dataset_id)
+    updated = meta.get("updated", "")
+
+    # NEW: Extract readable categories
+    categories = extract_readable_categories(meta)
 
     return render_template(
         'dataset_detail.html',
         dataset_id=dataset_id,
         label=label,
-        metadata=meta
+        updated=updated,
+        categories=categories
     )
 
 
