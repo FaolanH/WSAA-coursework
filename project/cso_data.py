@@ -1,5 +1,5 @@
-# Project - CSO PXStat API - Tables last updated 
-# I have decided to make my project relevant to my work - this means looking at the api last updated tables on PxStat for CSO data. 
+# Project - CSO PXStat API - Tables last updated
+# Using the CSO PXStat API to list recently updated tables.
 
 #!flask/bin/python
 
@@ -35,25 +35,24 @@ def index():
     for item in items:
         raw_date = item.get("updated")
 
-        # Format the updated date nicely
+        # Parse ISO date into datetime object
         try:
             dt = datetime.fromisoformat(raw_date)
             formatted_date = dt.strftime("%d %b %Y")
         except Exception:
+            dt = None
             formatted_date = raw_date
 
         datasets.append({
             "label": item.get("label"),
-            "updated": formatted_date
+            "updated": formatted_date,
+            "sort_date": dt
         })
 
-    # Sort by updated date
-    datasets.sort(key=lambda x: x["updated"], reverse=True)
+    # Sort by real datetime (fallback to string if needed)
+    datasets.sort(key=lambda x: x["sort_date"] or x["updated"], reverse=True)
 
-    return render_template(
-        'index.html',
-        datasets=datasets
-    )
+    return render_template('index.html', datasets=datasets)
 
 
 if __name__ == "__main__":
