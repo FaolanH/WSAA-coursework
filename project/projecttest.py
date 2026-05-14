@@ -1,19 +1,9 @@
-# Author: Faolán Hamilton
 # Project - CSO PXStat API - Tables last updated 
 # I have decided to make my project relevant to my work - this means looking at the api last updated tables on PxStat for CSO data. 
 
 #!flask/bin/python
 from flask import Flask, jsonify, render_template
 import requests
-
-
-    return render_template(
-        'index.html',
-        label=data.get("label"),
-        updated=data.get("updated"),
-        ids=data.get("id")
-    )
-
 
 app = Flask(__name__)
 
