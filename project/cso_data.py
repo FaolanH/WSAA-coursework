@@ -3,37 +3,26 @@
 
 #!flask/bin/python
 
-# import modules needed
-from flask import Flask, jsonify, render_template
+from flask import Flask, render_template
 import requests
-import os
 from datetime import datetime
 
 app = Flask(__name__)
 
-def get_categories(dataset_id):
-    url = f"https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{dataset_id}/JSON-stat/2.0/en"
-    headers = {"User-Agent": "Mozilla/5.0"}
-    r = requests.get(url, headers=headers, timeout=10)
-
-    try:
-        meta = r.json()
-    except:
-        return {}
 
 @app.route('/')
 def index():
-
-    print("DEBUG CWD:", os.getcwd())
-    print("DEBUG FILE:", __file__)
+    """
+    Home page:
+    - Calls the CSO 'ReadCollection' endpoint for a given date
+    - Extracts label, last updated date, and dataset ID
+    - Passes a clean list of datasets to the template
+    """
 
     api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadCollection/2026-05-07/en"
-
     headers = {"User-Agent": "Mozilla/5.0"}
-    response = requests.get(api_url, headers=headers, timeout=10)
 
-    print("STATUS:", response.status_code)
-    print("TEXT:", response.text[:200])
+    response = requests.get(api_url, headers=headers, timeout=10)
 
     try:
         data = response.json()
@@ -46,12 +35,14 @@ def index():
     for item in items:
         raw_date = item.get("updated")
 
+        # Format the updated date nicely
         try:
             dt = datetime.fromisoformat(raw_date)
             formatted_date = dt.strftime("%d %b %Y")
-        except:
+        except Exception:
             formatted_date = raw_date
 
+        # Some APIs return id as ["FIQ01"], others as "FIQ01"
         dataset_id = item.get("id")[0] if isinstance(item.get("id"), list) else item.get("id")
 
         datasets.append({
@@ -60,6 +51,7 @@ def index():
             "id": dataset_id
         })
 
+    # Sort by updated date
     datasets.sort(key=lambda x: x["updated"], reverse=True)
 
     return render_template(
@@ -69,31 +61,33 @@ def index():
         datasets=datasets
     )
 
+
 @app.route('/dataset/<dataset_id>')
 def dataset_detail(dataset_id):
-    categories = get_categories(dataset_id)
+    """
+    Detail page for a single dataset:
+    - Calls the CSO 'ReadDataset' endpoint
+    - Shows raw metadata and basic info
+    """
 
-    # Fetch full dataset metadata
     url = f"https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{dataset_id}/JSON-stat/2.0/en"
     headers = {"User-Agent": "Mozilla/5.0"}
     r = requests.get(url, headers=headers, timeout=10)
 
     try:
         meta = r.json()
-    except:
+    except Exception:
         meta = {}
 
-    # Extract dataset label
     label = meta.get("label", dataset_id)
 
     return render_template(
         'dataset_detail.html',
         dataset_id=dataset_id,
         label=label,
-        categories=categories,
         metadata=meta
     )
 
-@app.route('/updated_tables')
-def updated_tables():
-    return "Here are the tables that have been updated:"
+
+if __name__ == "__main__":
+    app.run()
