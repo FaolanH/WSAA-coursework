@@ -2,13 +2,15 @@
 # I have decided to make my project relevant to my work - this means looking at the api last updated tables on PxStat for CSO data. 
 
 #!flask/bin/python
+
+# import modules needed
 from flask import Flask, jsonify, render_template
 import requests
 import os
 from datetime import datetime
 
-
 app = Flask(__name__)
+
 def get_categories(dataset_id):
     url = f"https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{dataset_id}/JSON-stat/2.0/en"
     headers = {"User-Agent": "Mozilla/5.0"}
@@ -54,22 +56,22 @@ def index():
     for item in items:
         raw_date = item.get("updated")
 
-    try:
-        dt = datetime.fromisoformat(raw_date)
-        formatted_date = dt.strftime("%d %b %Y")
-    except:
-        formatted_date = raw_date
+        try:
+            dt = datetime.fromisoformat(raw_date)
+            formatted_date = dt.strftime("%d %b %Y")
+        except:
+            formatted_date = raw_date
 
-    dataset_id = item.get("id")[0] if isinstance(item.get("id"), list) else item.get("id")
+        dataset_id = item.get("id")[0] if isinstance(item.get("id"), list) else item.get("id")
 
-    categories = get_categories(dataset_id)
+        categories = get_categories(dataset_id)
 
-    datasets.append({
-        "label": item.get("label"),
-        "updated": formatted_date,
-        "id": dataset_id,
-        "categories": categories
-    })
+        datasets.append({
+            "label": item.get("label"),
+            "updated": formatted_date,
+            "id": dataset_id,
+            "categories": categories
+        })
 
     datasets.sort(key=lambda x: x["updated"], reverse=True)
 
@@ -79,7 +81,6 @@ def index():
         last_updated="May 2026",
         datasets=datasets
     )
-
 
 @app.route('/updated_tables')
 def updated_tables():
