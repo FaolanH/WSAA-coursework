@@ -14,17 +14,15 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/PEA01/JSON-stat/2.0/en"
+
+    return render_template('index.html', api_url=api_url)
 
 @app.route('/updated_tables')
 def updates_tables ():
     return "Here are the tables that have been updated:"
 
-@app.route('/')
-def cso():
-    api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/PEA01/JSON-stat/2.0/en"
 
-    return render_template('index.html', api_url=api_url)
 
 
 # The postman AI helped me to begin! I needed to visualize the list of updated tables in a user-friendly format. converstation id: 4db2086d-6818-4ebc-add4-1884561d88b4
