@@ -6,6 +6,15 @@
 from flask import Flask, jsonify, render_template
 import requests
 
+
+    return render_template(
+        'index.html',
+        label=data.get("label"),
+        updated=data.get("updated"),
+        ids=data.get("id")
+    )
+
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -16,10 +25,11 @@ def index():
 
     return render_template(
         'index.html',
-        api_url=api_url,
         welcome_text="Welcome to the PxStat Updates API!",
         last_updated="May 2026",
-        data=data
+        label=data.get("label"),
+        updated=data.get("updated"),
+        ids=data.get("id")
     )
 
 @app.route('/updated_tables')

@@ -6,12 +6,38 @@
 </head>
 
 <body>
-    <h1>{{ welcome_text }}</h1>
-    <p>Last updated: {{ last_updated }}</p>
-    <p>API URL: {{ api_url }}</p>
 
-    <h2>Raw API Data</h2>
-    <pre>{{ data | tojson(indent=4) }}</pre>
+<h2>CSO Dataset Overview</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr class="even">
+            <td>Dataset Label</td>
+            <td>{{ label }}</td>
+        </tr>
+
+        <tr class="odd">
+            <td>Last Updated</td>
+            <td>{{ updated }}</td>
+        </tr>
+
+        <tr class="even">
+            <td>Dimensions (id)</td>
+            <td>
+                {% for item in ids %}
+                    {{ item }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 </body>
 </html>
