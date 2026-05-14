@@ -41,7 +41,6 @@ def index():
         datasets=datasets
     )
 
-
 @app.route('/updated_tables')
 def updated_tables():
     return "Here are the tables that have been updated:"
