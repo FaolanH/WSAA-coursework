@@ -119,10 +119,8 @@ def dataset_detail(dataset_id):
 
     return render_template(
         'dataset_detail.html',
-        dataset_id=dataset_id,
         label=label,
         updated=updated,
-        categories=categories
     )
 
 
