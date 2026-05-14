@@ -11,4 +11,4 @@ Steps for running the venv:
 
  Here is a link to the web app: https://faolanh.pythonanywhere.com/
 
- 
+ This project aims to show the user the most up-to-date tables on PxStat using pythonanywhere. From there, 
