@@ -25,7 +25,9 @@
             <td>{{ d.label }}</td>
             <td>{{ d.updated }}</td>
             <td>{{ d.id }}</td>
-            <td><a href="/dataset/{{ d.id }}">View details</a></td>
+            <td><a href="https://data.cso.ie/table/{{ d.id }}" target="_blank">View on CSO</a></td>
+            <td><a href="https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{{ d.id }}/JSON-stat/2.0/en" target="_blank">API</a></td>
+
         </tr>
         {% endfor %}
     </tbody>
