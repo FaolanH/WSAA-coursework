@@ -15,7 +15,7 @@ def index():
     print("DEBUG FILE:", __file__)
 
 
-    api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadCollection/JSON-stat/2.0/en"
+    api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadCollection/2026-05-07/en"
 
     headers = {"User-Agent": "Mozilla/5.0"}
     response = requests.get(api_url, headers=headers, timeout=10)
