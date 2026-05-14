@@ -4,12 +4,16 @@
 #!flask/bin/python
 from flask import Flask, jsonify, render_template
 import requests
+import os
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    print("DEBUG: Running updated index()")
+
+    print("DEBUG CWD:", os.getcwd())
+    print("DEBUG FILE:", __file__)
+
 
     api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadCollection/JSON-stat/2.0/en"
 
