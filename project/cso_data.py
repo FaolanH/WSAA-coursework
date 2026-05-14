@@ -31,21 +31,21 @@ def index():
 
     items = data.get("link", {}).get("item", [])
 
-datasets = []
-for item in items:
-    raw_date = item.get("updated")
+    datasets = []
+    for item in items:
+        raw_date = item.get("updated")
 
-    try:
-        dt = datetime.fromisoformat(raw_date)
-        formatted_date = dt.strftime("%d %b %Y")
-    except:
-        formatted_date = raw_date
+        try:
+            dt = datetime.fromisoformat(raw_date)
+            formatted_date = dt.strftime("%d %b %Y")
+        except:
+            formatted_date = raw_date
 
-    datasets.append({
-        "label": item.get("label"),
-        "updated": formatted_date,
-        "dimension": item.get("dimension")
-    })
+        datasets.append({
+            "label": item.get("label"),
+            "updated": formatted_date,
+            "dimension": item.get("dimension")
+        })
 
 
     datasets.sort(key=lambda x: x["updated"], reverse=True)
