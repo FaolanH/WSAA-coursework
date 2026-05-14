@@ -35,7 +35,7 @@ def index():
         datasets.append({
             "label": item.get("label"),
             "updated": item.get("updated"),
-            "id": item.get("id")
+            "dimension": item.get("dimension")
         })
 
     datasets.sort(key=lambda x: x["updated"], reverse=True)
