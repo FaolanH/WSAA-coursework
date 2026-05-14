@@ -1,61 +1,29 @@
-import requests
 import sqlite3
+import csv
 
 DB_NAME = "hpm08.db"
+CSV_FILE = "HPM08.csv"
 
-API_URL = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/HPM08/JSON-stat/2.0/en"
+conn = sqlite3.connect(DB_NAME)
+cur = conn.cursor()
 
-def fetch_hpm08():
-    data = requests.get(API_URL).json()
+with open(CSV_FILE, newline='', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    rows_inserted = 0
 
-    dims = data["dimension"]
-    values = data["value"]
+    for row in reader:
+        period = row["TIME_PERIOD"]
+        geography = row["GEOG"]
+        value = row["VALUE"]
 
-    # Identify dimension keys (excluding metadata keys)
-    dim_keys = [k for k in dims.keys() if k not in ["id", "size"]]
-
-    # First dimension = geography
-    geo_dim = dim_keys[1]
-
-    # Second dimension = time period
-    time_dim = dim_keys[0]
-
-    geographies = list(dims[geo_dim]["category"]["index"].keys())
-    periods = list(dims[time_dim]["category"]["index"].keys())
-
-    rows = []
-    idx = 0
-
-    for geo in geographies:
-        for period in periods:
-            value = values[idx]
-            idx += 1
-            if value is None:
-                continue
-            rows.append((period, geo, value))
-
-    return rows
-
-
-def insert_into_db(rows):
-    conn = sqlite3.connect(DB_NAME)
-    cur = conn.cursor()
-
-    for period, geo, value in rows:
         cur.execute("""
             INSERT INTO hpm08 (period, geography, value)
             VALUES (?, ?, ?)
-        """, (period, geo, value))
+        """, (period, geography, value))
 
-    conn.commit()
-    conn.close()
+        rows_inserted += 1
 
+conn.commit()
+conn.close()
 
-if __name__ == "__main__":
-    print("Fetching HPM08 data...")
-    rows = fetch_hpm08()
-    print(f"Fetched {len(rows)} rows.")
-
-    print("Inserting into database...")
-    insert_into_db(rows)
-    print("Done.")
+print(f"Inserted {rows_inserted} rows.")
