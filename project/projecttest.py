@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    print("DEBUG: Running updated index()")
+
     api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadCollection/JSON-stat/2.0/en"
 
     headers = {"User-Agent": "Mozilla/5.0"}
