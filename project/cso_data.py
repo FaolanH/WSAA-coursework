@@ -21,17 +21,6 @@ def get_categories(dataset_id):
     except:
         return {}
 
-    dims = meta.get("dimension", {})
-    categories = {}
-
-    for dim_key, dim_data in dims.items():
-        label = dim_data.get("label", dim_key)
-        cat_labels = list(dim_data.get("category", {}).get("label", {}).values())
-        categories[label] = cat_labels
-
-    return categories
-
-
 @app.route('/')
 def index():
 
@@ -65,12 +54,10 @@ def index():
 
         dataset_id = item.get("id")[0] if isinstance(item.get("id"), list) else item.get("id")
 
-        categories = get_categories(dataset_id)
-
         datasets.append({
             "label": item.get("label"),
             "updated": formatted_date,
-            "id": dataset_id,
+            "id": dataset_id
         })
 
     datasets.sort(key=lambda x: x["updated"], reverse=True)
@@ -85,7 +72,7 @@ def index():
 @app.route('/dataset/<dataset_id>')
 def dataset_detail(dataset_id):
     categories = get_categories(dataset_id)
-    
+
     # Fetch full dataset metadata
     url = f"https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{dataset_id}/JSON-stat/2.0/en"
     headers = {"User-Agent": "Mozilla/5.0"}

@@ -12,32 +12,24 @@
 <table>
     <thead>
         <tr>
-            <th>Field</th>
-            <th>Value</th>
+            <th>Label</th>
+            <th>Last Updated</th>
+            <th>Dataset ID</th>
+            <th>Details</th>
         </tr>
     </thead>
 
-<tbody>
-    {% for d in datasets %}
-    <tr class="{{ 'even' if loop.index0 % 2 == 0 else 'odd' }}">
-        <td>{{ d.label }}</td>
-        <td>{{ d.updated }}</td>
-        <td>
-            {% for item in d.id %}
-                {{ item }}{% if not loop.last %}, {% endif %}
-            {% endfor %}
-        </td>
-    </tr>
-    {% endfor %}
-</tbody>
+    <tbody>
+        {% for d in datasets %}
+        <tr class="{{ 'even' if loop.index0 % 2 == 0 else 'odd' }}">
+            <td>{{ d.label }}</td>
+            <td>{{ d.updated }}</td>
+            <td>{{ d.id }}</td>
+            <td><a href="/dataset/{{ d.id }}">View details</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-<td>
-    {% for key, values in d.categories.items() %}
-        <strong>{{ key }}:</strong> {{ values|join(', ') }}<br>
-    {% endfor %}
-</td>
-<td>
-    <a href="/dataset/{{ d.id }}">View details</a>
-</td>
-
-<td><a href="/dataset/{{ d.id }}">View details</a></td>
+</body>
+</html>
