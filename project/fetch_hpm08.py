@@ -12,7 +12,7 @@ with open(CSV_FILE, newline='', encoding='utf-8') as f:
     rows_inserted = 0
 
     for row in reader:
-        period = row["MONTH"]
+        period = row["Month"]
         geography = row["GEOG"]
         value = row["VALUE"]
 
