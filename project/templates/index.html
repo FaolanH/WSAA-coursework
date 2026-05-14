@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>PXStat Updates</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-
-<body>
-
-<h2>CSO Dataset Overview</h2>
-
 <table>
     <thead>
         <tr>
             <th>Label</th>
+            <th>Code</th>
             <th>Last Updated</th>
             <th>Links</th>
         </tr>
@@ -22,8 +12,8 @@
         {% for d in datasets %}
         <tr class="{{ 'even' if loop.index0 % 2 == 0 else 'odd' }}">
             <td>{{ d.label }}</td>
-            <td>{{ d.updated }}</td>
             <td>{{ d.id }}</td>
+            <td>{{ d.updated }}</td>
             <td>
                 <a href="/dataset/{{ d.id }}">Details</a> |
                 <a href="https://data.cso.ie/table/{{ d.id }}" target="_blank">CSO</a>
@@ -32,6 +22,3 @@
         {% endfor %}
     </tbody>
 </table>
-
-</body>
-</html>
