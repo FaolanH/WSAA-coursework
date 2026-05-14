@@ -22,7 +22,16 @@ def index():
 def updates_tables ():
     return "Here are the tables that have been updated:"
 
+return render_template(
+    'index.html',
+    api_url=api_url,
+    welcome_text="Welcome to the PxStat Updates API!",
+    last_updated="May 2026"
+)
 
+data = requests.get(api_url).json()
+
+return render_template('index.html', data=data)
 
 
 # The postman AI helped me to begin! I needed to visualize the list of updated tables in a user-friendly format. converstation id: 4db2086d-6818-4ebc-add4-1884561d88b4
