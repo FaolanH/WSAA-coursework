@@ -1,0 +1,26 @@
+<h1>HPM08 Data</h1>
+
+<a href="/hpm08/add">Add New Record</a>
+
+<table border="1" cellpadding="6">
+    <tr>
+        <th>ID</th>
+        <th>Period</th>
+        <th>Geography</th>
+        <th>Value</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for row in rows %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.period }}</td>
+        <td>{{ row.geography }}</td>
+        <td>{{ row.value }}</td>
+        <td>
+            <a href="/hpm08/edit/{{ row.id }}">Edit</a> |
+            <a href="/hpm08/delete/{{ row.id }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
