@@ -13,7 +13,7 @@ with open(CSV_FILE, newline='', encoding='utf-8') as f:
 
     for row in reader:
         period = row["Month"]
-        geography = row["GEOG"]
+        geography = row["Eircode Output"]
         value = row["VALUE"]
 
         cur.execute("""
