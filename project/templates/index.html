@@ -30,3 +30,9 @@
     </tr>
     {% endfor %}
 </tbody>
+
+<td>
+    {% for key, values in d.categories.items() %}
+        <strong>{{ key }}:</strong> {{ values|join(', ') }}<br>
+    {% endfor %}
+</td>

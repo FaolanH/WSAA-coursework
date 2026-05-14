@@ -9,6 +9,25 @@ from datetime import datetime
 
 
 app = Flask(__name__)
+def get_categories(dataset_id):
+    url = f"https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{dataset_id}/JSON-stat/2.0/en"
+    headers = {"User-Agent": "Mozilla/5.0"}
+    r = requests.get(url, headers=headers, timeout=10)
+
+    try:
+        meta = r.json()
+    except:
+        return {}
+
+    dims = meta.get("dimension", {})
+    categories = {}
+
+    for dim_key, dim_data in dims.items():
+        label = dim_data.get("label", dim_key)
+        cat_labels = list(dim_data.get("category", {}).get("label", {}).values())
+        categories[label] = cat_labels
+
+    return categories
 
 @app.route('/')
 def index():
@@ -32,21 +51,25 @@ def index():
     items = data.get("link", {}).get("item", [])
 
     datasets = []
-    for item in items:
-        raw_date = item.get("updated")
+for item in items:
+    raw_date = item.get("updated")
 
-        try:
-            dt = datetime.fromisoformat(raw_date)
-            formatted_date = dt.strftime("%d %b %Y")
-        except:
-            formatted_date = raw_date
+    try:
+        dt = datetime.fromisoformat(raw_date)
+        formatted_date = dt.strftime("%d %b %Y")
+    except:
+        formatted_date = raw_date
 
-        datasets.append({
-            "label": item.get("label"),
-            "updated": formatted_date,
-            "dimension": item.get("dimension")
-        })
+    dataset_id = item.get("id")[0] if isinstance(item.get("id"), list) else item.get("id")
 
+    categories = get_categories(dataset_id)
+
+    datasets.append({
+        "label": item.get("label"),
+        "updated": formatted_date,
+        "id": dataset_id,
+        "categories": categories
+    })
 
     datasets.sort(key=lambda x: x["updated"], reverse=True)
 
@@ -56,6 +79,7 @@ def index():
         last_updated="May 2026",
         datasets=datasets
     )
+
 
 @app.route('/updated_tables')
 def updated_tables():
