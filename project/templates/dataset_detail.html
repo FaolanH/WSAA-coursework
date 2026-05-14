@@ -7,22 +7,13 @@
 
 <body>
 
-<h2>{{ label }} ({{ dataset_id }})</h2>
-
-<h3>Categories</h3>
-{% for key, values in categories.items() %}
-    <p><strong>{{ key }}:</strong> {{ values|join(', ') }}</p>
-{% endfor %}
+<h2>{{ label }}</h2>
+<p><strong>Dataset ID:</strong> {{ dataset_id }}</p>
 
 <h3>Metadata (raw)</h3>
 <pre>{{ metadata | tojson(indent=2) }}</pre>
 
 <p><a href="/">← Back to dataset list</a></p>
-
-<h3>Categories</h3>
-{% for key, values in categories.items() %}
-    <p><strong>{{ key }}:</strong> {{ values|join(', ') }}</p>
-{% endfor %}
 
 </body>
 </html>
