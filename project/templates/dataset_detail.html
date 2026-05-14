@@ -19,5 +19,10 @@
 
 <p><a href="/">← Back to dataset list</a></p>
 
+<h3>Categories</h3>
+{% for key, values in categories.items() %}
+    <p><strong>{{ key }}:</strong> {{ values|join(', ') }}</p>
+{% endfor %}
+
 </body>
 </html>
