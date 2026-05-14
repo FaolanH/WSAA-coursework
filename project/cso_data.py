@@ -5,6 +5,7 @@
 from flask import Flask, jsonify, render_template
 import requests
 import os
+import datetime from datetime
 
 app = Flask(__name__)
 
@@ -30,11 +31,20 @@ def index():
 
     items = data.get("link", {}).get("item", [])
 
+    raw_date = item.get("updated")
+
+    try:
+        dt = datetime.fromisoformat(raw_date)
+        formatted_date = dt.strftime("%d %b %Y")
+    except:
+        formatted_date = raw_date
+    
+
     datasets = []
     for item in items:
         datasets.append({
             "label": item.get("label"),
-            "updated": item.get("updated"),
+            "updated": formatted_date,
             "dimension": item.get("dimension")
         })
 
