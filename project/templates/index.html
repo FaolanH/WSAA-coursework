@@ -2,9 +2,7 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Matrix</th>
             <th>Last Updated</th>
-            <th>Links</th>
         </tr>
     </thead>
 
@@ -12,12 +10,7 @@
         {% for d in datasets %}
         <tr class="{{ 'even' if loop.index0 % 2 == 0 else 'odd' }}">
             <td>{{ d.label }}</td>
-            <td>{{ d.id }}</td>
             <td>{{ d.updated }}</td>
-            <td>
-                <a href="/dataset/{{ d.id }}">Details</a> |
-                <a href="https://data.cso.ie/table/{{ d.id }}" target="_blank">CSO</a>
-            </td>
         </tr>
         {% endfor %}
     </tbody>
