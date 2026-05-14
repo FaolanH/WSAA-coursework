@@ -51,8 +51,8 @@ def index():
     items = data.get("link", {}).get("item", [])
 
     datasets = []
-for item in items:
-    raw_date = item.get("updated")
+    for item in items:
+        raw_date = item.get("updated")
 
     try:
         dt = datetime.fromisoformat(raw_date)
