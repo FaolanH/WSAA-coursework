@@ -15,7 +15,6 @@ def index():
     print("DEBUG CWD:", os.getcwd())
     print("DEBUG FILE:", __file__)
 
-
     api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadCollection/2026-05-07/en"
 
     headers = {"User-Agent": "Mozilla/5.0"}
@@ -29,8 +28,6 @@ def index():
     except Exception as e:
         return f"CSO API returned invalid JSON. Error: {e}"
 
-    items = data.get("link", {}).get("item", [])
-
     raw_date = item.get("updated")
 
     try:
@@ -38,8 +35,10 @@ def index():
         formatted_date = dt.strftime("%d %b %Y")
     except:
         formatted_date = raw_date
-    
 
+
+    items = data.get("link", {}).get("item", [])
+   
     datasets = []
     for item in items:
         datasets.append({
