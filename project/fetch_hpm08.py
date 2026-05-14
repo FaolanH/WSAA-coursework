@@ -2,7 +2,7 @@ import sqlite3
 import csv
 
 DB_NAME = "hpm08.db"
-CSV_FILE = "HPM08.csv"
+CSV_FILE = "HPM08.2025-2026.csv"
 
 conn = sqlite3.connect(DB_NAME)
 cur = conn.cursor()
