@@ -6,16 +6,12 @@
 from flask import Flask, jsonify, render_template
 import requests
 
-# API for last updated tables pxstat
-url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadCollection/2026-05-07/en"
-
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/PEA01/JSON-stat/2.0/en"
 
-    # Fetch API data
     data = requests.get(api_url).json()
 
     return render_template(
@@ -29,6 +25,7 @@ def index():
 @app.route('/updated_tables')
 def updated_tables():
     return "Here are the tables that have been updated:"
+
 
 # The postman AI helped me to begin! I needed to visualize the list of updated tables in a user-friendly format. converstation id: 4db2086d-6818-4ebc-add4-1884561d88b4
 # When I asked 'Help me add a visualization script', it gave me back the below output
