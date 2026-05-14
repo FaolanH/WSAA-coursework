@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>PXStat Updates</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-
-<body>
-
-<h2>CSO Dataset Overview</h2>
-
 <table>
     <thead>
         <tr>
             <th>Label</th>
             <th>Last Updated</th>
             <th>Dataset ID</th>
-            <th>Details</th>
+            <th>Links</th>
         </tr>
     </thead>
 
@@ -25,13 +14,12 @@
             <td>{{ d.label }}</td>
             <td>{{ d.updated }}</td>
             <td>{{ d.id }}</td>
-            <td><a href="https://data.cso.ie/table/{{ d.id }}" target="_blank">View on CSO</a></td>
-            <td><a href="https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{{ d.id }}/JSON-stat/2.0/en" target="_blank">API</a></td>
-
+            <td>
+                <a href="/dataset/{{ d.id }}">Details</a> |
+                <a href="https://data.cso.ie/table/{{ d.id }}" target="_blank">CSO</a> |
+                <a href="https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{{ d.id }}/JSON-stat/2.0/en" target="_blank">API</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-
-</body>
-</html>
