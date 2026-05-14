@@ -30,7 +30,6 @@ def get_categories(dataset_id):
         categories[label] = cat_labels
 
     return categories
-
 @app.route('/')
 def index():
 
