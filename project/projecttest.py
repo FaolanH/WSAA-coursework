@@ -10,12 +10,20 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     api_url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadCollection/JSON-stat/2.0/en"
-    data = requests.get(api_url).json()
 
-    # Extract the list of datasets
+    headers = {"User-Agent": "Mozilla/5.0"}
+    response = requests.get(api_url, headers=headers, timeout=10)
+
+    print("STATUS:", response.status_code)
+    print("TEXT:", response.text[:200])
+
+    try:
+        data = response.json()
+    except Exception as e:
+        return f"CSO API returned invalid JSON. Error: {e}"
+
     items = data.get("link", {}).get("item", [])
 
-    # Build a clean list of only the fields you want
     datasets = []
     for item in items:
         datasets.append({
@@ -24,7 +32,6 @@ def index():
             "id": item.get("id")
         })
 
-    # Sort newest → oldest
     datasets.sort(key=lambda x: x["updated"], reverse=True)
 
     return render_template(
