@@ -1,7 +1,16 @@
-<h1>{{ welcome_text }}</h1>
-<p>Last updated: {{ last_updated }}</p>
-<p>API URL: {{ api_url }}</p>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<pre>{{ data | tojson(indent=2) }}</pre>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PXStat Updates</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 
+<body>
+    <h1>{{ welcome_text }}</h1>
+    <p>Last updated: {{ last_updated }}</p>
+    <p>API URL: {{ api_url }}</p>
 
+    <h2>Raw API Data</h2>
+    <pre>{{ data | tojson(indent=2) }}</pre>
+</body>
+</html>
